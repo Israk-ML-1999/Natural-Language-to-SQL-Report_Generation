@@ -1,0 +1,26 @@
+# Natural Language to SQL System - Requirements
+
+# Core Dependencies
+langgraph>=0.0.20
+anthropic>=0.18.0
+sqlalchemy>=2.0.0
+pandas>=2.0.0
+python-dotenv>=1.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# PDF Generation
+fpdf2>=2.7.0
+
+# Data Generation (for demo database)
+faker>=22.0.0
+
+# Optional: PostgreSQL Support
+# Uncomment if using PostgreSQL
+# psycopg2-binary>=2.9.0
+
+# Optional: MySQL Support  
+# Uncomment if using MySQL
+# pymysql>=1.1.0

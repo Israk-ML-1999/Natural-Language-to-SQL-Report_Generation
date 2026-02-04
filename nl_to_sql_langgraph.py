@@ -377,7 +377,7 @@ Statistics:
 {df.describe().to_string() if len(df) > 0 else 'No data'}
 """
         
-        prompt = f"""You are a professional data analyst creating executive-level insights for business stakeholders.
+        prompt = f"""You are a professional data analyst creating executive-level insights for business stakeholders.Create meaningful insights and visualizations for normal people. 
 
 Original Question: {state['user_question']}
 

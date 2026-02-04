@@ -76,7 +76,7 @@ body {
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(135, 206, 250, 0.3)), url('homepage.jpg');
     background-size: cover;
     background-position: center;
-    filter: blur(2px);
+    filter: blur(3px);
     transform: scale(1);
     /* Reduced scale slightly as well */
 }
@@ -84,7 +84,7 @@ body {
 .gradient-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(75px);
     opacity: 0.25;
     animation: float 20s infinite ease-in-out;
 }
@@ -179,7 +179,7 @@ body {
 .header h1 {
     font-size: 3rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #4e80cf, #3f7ae7);
+    background: linear-gradient(135deg, #2730bb, #3f7ae7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -187,10 +187,10 @@ body {
 }
 
 .subtitle {
-    color: #d54643 !important;
+    color: #ff0000 !important;
     /* Pure Red for maximum visibility */
     font-size: 1.2rem;
-    margin-top: 1rem;
+    margin-top: -1.2rem;
     /* Moved higher */
     font-weight: 600;
     font-style: italic;
@@ -205,14 +205,15 @@ body {
     border-radius: 16px;
     padding: 2.5rem;
     box-shadow: var(--shadow);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
     transition: all 0.3s ease;
 }
 
 .card:hover {
     border-color: var(--primary);
     box-shadow: var(--glow);
-    transform: translateY(-2px);s
+    transform: translateY(-2px);
+
 }
 
 .card-title {

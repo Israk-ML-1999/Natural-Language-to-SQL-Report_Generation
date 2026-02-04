@@ -1,0 +1,46 @@
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nl_to_sql_app
+    expose:
+      - '8000'
+    env_file:
+      - .env
+    networks:
+      - app-network
+    volumes:
+      - ./reports:/app/reports              # Mount reports folder for generated PDFs
+      - ./charts:/app/charts                # Mount charts folder for generated images
+      - ./demo_sales.db:/app/demo_sales.db  # Mount demo database
+      - ./templates:/app/templates          # Mount templates for hot reload during development
+      - ./image:/app/image                  # Mount image folder
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--output-document=/dev/null", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy_nl_to_sql
+    ports:
+      - '0.0.0.0:8089:80'
+    networks:
+      - app-network
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./reports:/app/reports              # Mount reports for serving PDFs
+      - ./charts:/app/charts                # Mount charts for serving images
+      - ./templates:/app/templates          # Mount templates for serving static files
+      - ./image:/app/image                  # Mount image folder for serving
+    depends_on:
+      - app
+    restart: unless-stopped

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Language to SQL - Query System</title>
+    <link rel="stylesheet" href="style.css?v=15.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L35 12.5V27.5L20 35L5 27.5V12.5L20 5Z" stroke="url(#gradient)" stroke-width="2"
+                            fill="none" />
+                        <circle cx="20" cy="20" r="8" fill="url(#gradient)" />
+                        <defs>
+                            <linearGradient id="gradient" x1="5" y1="5" x2="35" y2="35">
+                                <stop offset="0%" style="stop-color:#6366f1" />
+                                <stop offset="100%" style="stop-color:#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1>DB Query System to Report Generator</h1>
+            </div>
+            <div style="position: absolute; top: 20px; right: 20px;">
+                <button id="themeToggle" class="btn"
+                    style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); padding: 0.5rem 1rem;">
+                    <span id="themeIcon">☀️</span>
+                    <span id="themeText">Light Mode</span>
+                </button>
+            </div>
+            <p class="subtitle">Transform natural language into powerful SQL queries</p>
+        </header>
+
+        <!-- Query Input Section -->
+        <section class="query-section">
+            <div class="card">
+                <h2 class="card-title">Ask Your Question</h2>
+                <form id="queryForm" class="query-form">
+                    <div class="input-group">
+                        <label for="question">Natural Language Query</label>
+                        <textarea id="question" name="question" rows="4"
+                            placeholder="e.g., Show me the top 10 products by sales last month" required></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="database">Database Connection</label>
+                        <input type="text" id="database" name="database" placeholder="sqlite:///demo_sales.db"
+                            value="sqlite:///demo_sales.db" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span class="btn-text">Generate Query</span>
+                        <svg class="btn-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing your query...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Query Results</h2>
+                    <button id="downloadBtn" class="btn btn-download">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 13V3M10 13l3-3M10 13l-3-3M17 17H3" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span>Download Report</span>
+                    </button>
+                </div>
+
+                <!-- Generated SQL Query -->
+                <div class="result-item">
+                    <h3>Generated SQL Query</h3>
+                    <div class="code-block">
+                        <pre id="sqlQuery"><code></code></pre>
+                    </div>
+                </div>
+
+                <!-- Query Status -->
+                <div class="result-item">
+                    <h3>Validation Status</h3>
+                    <div id="validationStatus" class="status-badge"></div>
+                </div>
+
+                <!-- Analysis Summary -->
+                <div class="result-item">
+                    <h3>Analysis Summary</h3>
+                    <p id="analysisSummary" class="analysis-text"></p>
+                </div>
+
+                <!-- Key Metrics -->
+                <div id="metricsContainer" class="result-item" style="display: none;">
+                    <h3>Key Metrics</h3>
+                    <div id="metrics" class="metrics-grid"></div>
+                </div>
+
+                <!-- Data Table -->
+                <div id="tableContainer" class="result-item" style="display: none;">
+                    <h3>Query Results Data</h3>
+                    <div class="table-wrapper">
+                        <table id="resultsTable"></table>
+                    </div>
+                </div>
+
+                <!-- Process Log -->
+                <div class="result-item">
+                    <h3>Process Log</h3>
+                    <div id="processLog" class="process-log"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <div id="errorSection" class="error-section" style="display: none;">
+            <div class="error-card">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="20" stroke="#ef4444" stroke-width="2" />
+                    <path d="M24 16v8M24 28v.01" stroke="#ef4444" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <h3>Error Occurred</h3>
+                <p id="errorMessage"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Powered by LangGraph & Claude AI</p>
+    </footer>
+
+    <script src="script.js?v=2.0"></script>
+</body>
+
+</html>

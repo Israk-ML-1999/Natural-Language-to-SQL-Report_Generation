@@ -103,7 +103,6 @@ nl-to-sql-system/
 ├── demo_database.py           # Demo database generator
 ├── Requirements.txt           # Python dependencies
 ├── .env                       # Environment variables (create this)
-├── ENHANCEMENTS.md           # Detailed enhancement documentation
 └── README.md                 # This file
 ```
 
@@ -111,7 +110,7 @@ nl-to-sql-system/
 
 ## 🎮 Usage
 
-### Interactive Mode
+### Interactive Mod
 
 Run the system and select from demo questions:
 
